@@ -6,13 +6,21 @@ import Purchase from './Purchase';
 
 export default function Diesel({navigation}) {
 
-  const price = '3,008';
+  const price = '3,250';
 
     return (
-      <View>
+      <View style={styles.container}>
         <Details price={price}></Details>
         <Purchase navigation={navigation} />
       </View>
       
     );
   }
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 6,
+      padding: 20,
+      backgroundColor: '#fff'
+    }
+  })

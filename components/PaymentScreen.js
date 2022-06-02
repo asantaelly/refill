@@ -18,7 +18,10 @@ export default function PaymentScreen({navigation}) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { 
+          text: "OK", 
+          onPress: () => console.log("OK Pressed"),
+        }
       ]
     );
 
@@ -28,17 +31,17 @@ export default function PaymentScreen({navigation}) {
 
           <View style={styles.methodWrapper}>
 
-              <View style={styles.method}>
+              <TouchableOpacity style={styles.method}>
                     <Image style={styles.tinyLogo} source={mpesa}/>
-              </View>
+              </TouchableOpacity>
 
-              <View style={styles.method}>
+              <TouchableOpacity style={styles.method}>
                     <Image style={styles.tigo} source={tigo}/>
-              </View>
+              </TouchableOpacity>
 
-              <View style={styles.method}>
+              <TouchableOpacity style={styles.method}>
                     <Image style={styles.airtel} source={airtel}/>
-              </View>
+              </TouchableOpacity>
           </View>
 
         <View style={styles.buttonWrapper}>
@@ -54,8 +57,7 @@ export default function PaymentScreen({navigation}) {
 
   const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'flex-start',
+        flex: 6,
         backgroundColor: '#fff',
         padding: 40,
       },
@@ -64,54 +66,50 @@ export default function PaymentScreen({navigation}) {
         fontWeight: '500',
     },
     methodWrapper: {
+        flex: 1,
         flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'space-between',
         backgroundColor: '#fff',
-        height: 100,
-        width: 400,
+        justifyContent: 'space-between',
         padding: 20
     },
     method: {
-        height: 100,
-        width: 100,
         backgroundColor: '#000',
         borderRadius: 10,
         justifyContent: 'center',
-        alignItems: 'center'
+        padding: 5,
+        margin: 5
     },
     text: {
         fontWeight: 'bold'
     },
     buttonWrapper: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 20
+        flex: 5,
+        justifyContent: 'flex-start',
+        padding: 20,
+        backgroundColor: '#fff',
     },
     confirmButton: {
         height: 50,
-        width: 355,
         backgroundColor: '#000',
-        marginTop: 50,
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        padding: 10,
     },
     textButton: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#fff',
         fontWeight: '500'
     },
     tinyLogo: {
-        width: 100,
-        height: 100
+        width: 85,
+        height: 90
     },
     tigo: {
-        width: 90,
-        height: 90,
+        width: 80,
+        height: 80,
     },
     airtel: {
-        width: 85,
-        height: 85
+        width: 80,
+        height: 80
     }
   })

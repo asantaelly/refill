@@ -27,31 +27,30 @@ export default function Purchase({navigation}) {
 
   const styles = StyleSheet.create({
     form: {
-      height: 500,
-      alignItems: 'flex-start',
-      justifyContent: 'flex-start',
+      flex:4,
+      // alignItems: 'stretch',
       backgroundColor: '#fff',
-      paddingHorizontal: 30
+      paddingHorizontal: 15,
+      // padding: 10
     },
     input: {
       backgroundColor: '#e7ecef',
       height: 50,
-      width: 400,
       borderRadius: 10,
-      padding: 10
+      padding: 10,
     },
     title: {
       fontSize: 16,
       padding: 10,
     },
     submitButton: {
-      backgroundColor: '#000',
+      backgroundColor: '#222',
       height: 50,
-      width: 400,
       marginTop: 30,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 10
+      borderRadius: 10,
+      padding: 10
     },
     textButton: {
       color: '#fff',

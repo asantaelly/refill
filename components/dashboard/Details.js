@@ -23,22 +23,23 @@ export default function Details(props) {
 
   const styles = StyleSheet.create({
     container: {
+      flex:2,
       backgroundColor: '#fff',
-      alignItems: 'stretch',
-      padding: 30,
+      // alignItems: 'stretch',
+      padding: 10,
     },
     info: {
       flexDirection: 'row',
-      alignItems: 'flex-start',
-      backgroundColor: '#000',
+      // alignItems: 'flex-start',
+      backgroundColor: '#222',
       justifyContent: 'space-between',
       borderRadius: 20,
-      height: 200
+      // height: 200
     },
     title: {
       fontSize: 16,
       fontWeight: '400',
-      color: '#fff'
+      color: '#d6ccc2'
     },
     price: {
       fontSize: 40,
@@ -52,22 +53,25 @@ export default function Details(props) {
     },
     status: {
       marginTop: 120,
-      paddingRight: 15,
+      padding: 15,
       alignItems: 'center'
     },
     statusButton: { 
-      backgroundColor: '#ff7700',
-      fontSize: 20,
-      paddingHorizontal: 15,
-      paddingVertical: 5,
+      backgroundColor: '#ffb703',
+      fontSize: 16,
+      // paddingHorizontal: 15,
+      // paddingVertical: 5,
       borderRadius: 12,
-      width: 100,
-      height: 40,
-      fontWeight: 'bold'
+      // width: 100,
+      // height: 40,
+      fontWeight: 'bold',
+      padding: 8,
+      color: '#fff'
     },
     statusTitle: {
         fontSize: 16,
         fontWeight: '500',
-        color: '#fff',
+        color: '#d6ccc2',
+        paddingBottom: 3
       },
   })
