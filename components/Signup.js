@@ -5,16 +5,24 @@ import {
 }   from 'react-native';
 
 
-export default function Login({navigation}) {
+export default function Signup({navigation}) {
 
     return (
       <View style={styles.container}>
           <View style={styles.topContainer}>
             <Text style={styles.welcomeText}>Hi there!</Text>
-            <Text style={styles.welcomeText}>Welcome back.</Text>
+            <Text style={styles.welcomeText}>Welcome to our platform.</Text>
           </View>
 
+          
+
           <View style={styles.middleContainer}>
+
+          <TextInput 
+              style={styles.input}
+              placeholder="Name"
+            />
+
             <TextInput 
               style={styles.input}
               placeholder="Email Address"
@@ -24,20 +32,25 @@ export default function Login({navigation}) {
               style={styles.input}
               placeholder="Password"
             />
+
+            <TextInput 
+              style={styles.input}
+              placeholder="Confirm Password"
+            />
       
             <TouchableOpacity 
               style={styles.loginButton}
               onPress = {() => navigation.navigate('Dashboard')}  
             >
-            <Text style={styles.loginText}>Login</Text>
+                <Text style={styles.loginText}>Register</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity 
+            {/* <TouchableOpacity 
               style={styles.signupButton}
               onPress = {() => navigation.navigate('Signup')}  
             >
             <Text style={styles.loginText}>Register</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <View style={styles.bottomContainer}></View>
 
@@ -58,17 +71,17 @@ export default function Login({navigation}) {
       fontWeight: '900'
     },
     topContainer: {
-      flex: 2,
+      flex: 1,
       alignItems: 'flex-start',
       justifyContent: 'flex-end',
       margin: 5,
       paddingBottom: 20
     },
     middleContainer: {
-      flex: 2,
+      flex: 3,
     },
     bottomContainer: {
-      flex: 2,
+      flex: 1,
     },
     input: {
       backgroundColor: '#fff',
