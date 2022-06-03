@@ -24,6 +24,7 @@ export default function App() {
           component={HomeScreen}
           options={{ 
             title: 'PFS',
+            headerShown: false
           }}  
         />
         <Stack.Screen name="Dashboard" component={DashboardScreen}/>

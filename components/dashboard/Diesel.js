@@ -1,18 +1,18 @@
 import { React } from 'react';
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, KeyboardAvoidingView} from 'react-native';
 
 import Details from './Details'
 import Purchase from './Purchase';
 
 export default function Diesel({navigation}) {
 
-  const price = '3,250';
+  const price = Number("3250");
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <Details price={price}></Details>
-        <Purchase navigation={navigation} />
-      </View>
+        <Purchase navigation={navigation} price={price} />
+      </KeyboardAvoidingView>
       
     );
   }

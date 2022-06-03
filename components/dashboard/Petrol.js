@@ -1,5 +1,5 @@
 import { React } from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { Formik } from 'formik';
 
 import Details from './Details'
@@ -7,13 +7,13 @@ import Purchase from './Purchase';
 
 export default function Petrol({navigation}) {
 
-    const price = '2,994';
+    const price = Number("2994");
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <Details price={price}/>
-        <Purchase navigation={navigation}/>
-      </View>
+        <Purchase navigation={navigation} price={price} />
+      </KeyboardAvoidingView>
     );
   }
 

@@ -1,12 +1,22 @@
-import { React } from 'react';
+import { React, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 
 
-export default function Purchase({navigation}) {
+export default function Purchase({navigation, price}) {
+
+  const [amount, setAmount] = useState('');
+  const [fuelAmount, setFuelAmount] = useState(0.00);
+
+
+  const handleSubmit = () => {
+
+  }
 
     return (
 
           <View style={styles.form}>
+
+            
             <Text
               style={styles.title}
             >Enter Amount (TZS)</Text>
@@ -14,13 +24,23 @@ export default function Purchase({navigation}) {
             <TextInput
               style={styles.input}
               placeholder='Enter Amount (TZS)'
+              value={amount}
+              onChangeText={number => setAmount(number)}
+              keyboardType={'number-pad'}
             />
+            <ammountError/>
+
+            <Text style={styles.litreText}>Amount of litres = {fuelAmount}</Text>
+
+
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={() => navigation.navigate('Payment')}
+              onPress={handleSubmit}
             >
+
                 <Text style={styles.textButton}>Submit</Text>
             </TouchableOpacity>
+
           </View>
     );
   }
@@ -56,5 +76,9 @@ export default function Purchase({navigation}) {
       color: '#fff',
       fontSize: 16,
       fontWeight: 'bold'
+    },
+    litreText: {
+      margin: 10,
+      fontSize: 24,
     }
   })
