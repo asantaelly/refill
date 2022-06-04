@@ -6,11 +6,21 @@ export default function Purchase({navigation, price}) {
 
   const [amount, setAmount] = useState('');
   const [fuelAmount, setFuelAmount] = useState(0.00);
+  const Warning = <Text>Fuel amount should 1 or more!</Text>
 
+  const handleChange = () => {
 
-  const handleSubmit = () => {
+    const litres = amount/price;
+    console.log(litres)
+    return litres
 
   }
+
+  useEffect(() => {
+
+    setFuelAmount(handleChange);
+
+  }, [amount]);
 
     return (
 
@@ -28,17 +38,25 @@ export default function Purchase({navigation, price}) {
               onChangeText={number => setAmount(number)}
               keyboardType={'number-pad'}
             />
-            <ammountError/>
 
-            <Text style={styles.litreText}>Amount of litres = {fuelAmount}</Text>
+            {handleChange < 1 &&
+            
+              <Text>Fuel amount should 1 or more!</Text>
+            }
 
+            <View style={styles.litresWrapper}>
+              
+              <Text style={styles.litreText}>Amount in Litres</Text>
+              <Text style={styles.litreAmount}>{fuelAmount.toFixed(3)}</Text>
+
+            </View>
 
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={handleSubmit}
+              // onPress={}
             >
 
-                <Text style={styles.textButton}>Submit</Text>
+                <Text style={styles.textButton}>Pay Now</Text>
             </TouchableOpacity>
 
           </View>
@@ -77,8 +95,17 @@ export default function Purchase({navigation, price}) {
       fontSize: 16,
       fontWeight: 'bold'
     },
+    litresWrapper: {
+      flexDirection: 'row',
+      paddingVertical: 20
+    },
     litreText: {
       margin: 10,
       fontSize: 24,
+    },
+    litreAmount: {
+      fontSize: 24,
+      paddingHorizontal: 10,
+      margin: 10
     }
   })
