@@ -1,58 +1,13 @@
-import { React, useState } from 'react';
-import {
-    StyleSheet, Text, View, 
-    TextInput, TouchableOpacity  
-}   from 'react-native';
-import {API_URL} from '@env'
+import { React, useContext, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { AuthContext } from '../providers/AuthProvider';
 
 
 export default function Login ({navigation}) {
 
+    const {login, error } = useContext(AuthContext);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [emailError, setEmailError] = useState([]);
-    const [passwordError, setPasswordError] = useState([]);
-    const [errors, setErrors] = useState([])
-
-    // Check if inputs are not empty then send data to backend
-    function handleSubmit() {
-
-      if(!email || !password) {
-            setErrors('Input fields can not be empty!')
-          return
-      } else {
-
-        // Empty Error bags
-        setEmailError('')
-        
-        const data = { email: email, password: password };
-
-        fetch(`${API_URL}/api/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-
-          if(data.status == false) {
-              setErrors(data.message);
-              return
-          }
-
-          console.log('Success:', data);
-
-
-
-          return navigation.navigate('Dashboard')
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      }
-    }
 
     return (
       <View style={styles.container}>
@@ -61,9 +16,11 @@ export default function Login ({navigation}) {
             <Text style={styles.welcomeText}>Welcome back.</Text>
           </View>
 
-          <View style={styles.errorWrapper}>
-              {errors ? <Text style={styles.errorMessage}>{errors}</Text>: '' }
-            </View>
+          {/* <View> */}
+              {error &&
+                <Text style={styles.errorMessage}>{error}</Text>
+              }
+            {/* </View> */}
 
           <View style={styles.middleContainer}>
             
@@ -85,8 +42,7 @@ export default function Login ({navigation}) {
       
             <TouchableOpacity 
               style={styles.loginButton}
-              onPress = {handleSubmit}
-              // onPress = {() => navigation.navigate('Dashboard')}  
+              onPress = {() => login(email, password)}
             >
             <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
@@ -159,11 +115,6 @@ export default function Login ({navigation}) {
       alignItems: 'center',
       justifyContent: 'center'
     },
-    errorWrapper: {
-      // flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
     errorMessage: {
       paddingHorizontal: 8,
       paddingBottom: 3,
@@ -171,5 +122,3 @@ export default function Login ({navigation}) {
       fontWeight: 'bold',
     }
   }); 
-
-//   export default Login;
