@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 
 
-export default function Purchase({navigation, price}) {
+export default function PurchaseForm({navigation, price}) {
 
   const [amount, setAmount] = useState('');
   const [fuelAmount, setFuelAmount] = useState(0.00);
@@ -39,10 +39,10 @@ export default function Purchase({navigation, price}) {
               keyboardType={'number-pad'}
             />
 
-            {handleChange < 1 &&
+            {/* {handleChange < 1.00 &&
             
               <Text>Fuel amount should 1 or more!</Text>
-            }
+            } */}
 
             <View style={styles.litresWrapper}>
               
@@ -53,7 +53,7 @@ export default function Purchase({navigation, price}) {
 
             <TouchableOpacity
               style={styles.submitButton}
-              // onPress={}
+              onPress={() => navigation.navigate('Payment')}
             >
 
                 <Text style={styles.textButton}>Pay Now</Text>

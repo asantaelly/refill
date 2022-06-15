@@ -1,17 +1,17 @@
 import { React } from 'react';
 import { View, StyleSheet, Text, KeyboardAvoidingView} from 'react-native';
+import FuelDetails from '../components/FuelDetails';
+import PurchaseForm from '../components/PurchaseForm';
 
-import Details from './Details'
-import Purchase from './Purchase';
 
-export default function Diesel({navigation}) {
+export default function DieselTab({navigation}) {
 
   const price = Number("3250");
 
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <Details price={price}></Details>
-        <Purchase navigation={navigation} price={price} />
+        <FuelDetails price={price}/>
+        <PurchaseForm navigation={navigation} price={price} />
       </KeyboardAvoidingView>
       
     );

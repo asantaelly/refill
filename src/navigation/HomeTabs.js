@@ -1,11 +1,10 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
-import Diesel from './dashboard/Diesel';
-import Petrol from './dashboard/Petrol';
+import DieselTab from '../screens/DieselTab';
+import PetrolTab from '../screens/PetrolTab';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function DashboardTabs() {
+export default function HomeTabs() {
 
   return (
     <Tab.Navigator
@@ -19,12 +18,12 @@ export default function DashboardTabs() {
     >
       <Tab.Screen
         name="Petrol"
-        component={Petrol}
+        component={PetrolTab}
         options={{ tabBarLabel: 'Petrol' }}
       />
       <Tab.Screen
         name="Diesel"
-        component={Diesel}
+        component={DieselTab}
         options={{ tabBarLabel: 'Diesel' }}
       />
     </Tab.Navigator>

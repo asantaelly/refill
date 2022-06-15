@@ -1,18 +1,16 @@
 import { React } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
-import { Formik } from 'formik';
+import FuelDetails from '../components/FuelDetails';
+import PurchaseForm from '../components/PurchaseForm';
 
-import Details from './Details'
-import Purchase from './Purchase';
-
-export default function Petrol({navigation}) {
+export default function PetrolTab({navigation}) {
 
     const price = Number("2994");
 
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <Details price={price}/>
-        <Purchase navigation={navigation} price={price} />
+        <FuelDetails price={price}/>
+        <PurchaseForm navigation={navigation} price={price} />
       </KeyboardAvoidingView>
     );
   }

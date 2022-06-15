@@ -1,11 +1,11 @@
 import { React } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Alert, Image } from 'react-native';
 
-import airtel from '../assets/logo/airtelmoney.png';
-import tigo from '../assets/logo/tigopesa.png';
-import mpesa from '../assets/logo/mpesa.png';
+import airtel from '../../assets/logo/airtelmoney.png';
+import tigo from '../../assets/logo/tigopesa.png';
+import mpesa from '../../assets/logo/mpesa.png';
 
-export default function PaymentScreen({navigation}) {
+export default function Payment({navigation}) {
 
 
     const confirmationAlert = () =>

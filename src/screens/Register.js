@@ -1,11 +1,10 @@
-import { React } from 'react';
 import {
     StyleSheet, Text, View, 
     TextInput, TouchableOpacity  
 }   from 'react-native';
 
 
-export default function Signup({navigation}) {
+export default function Register({navigation}) {
 
     return (
       <View style={styles.container}>
@@ -40,7 +39,7 @@ export default function Signup({navigation}) {
       
             <TouchableOpacity 
               style={styles.loginButton}
-              onPress = {() => navigation.navigate('Dashboard')}  
+              onPress = {() => navigation.navigate('Home')}  
             >
                 <Text style={styles.loginText}>Register</Text>
             </TouchableOpacity>
