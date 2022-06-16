@@ -5,7 +5,7 @@ import { AuthContext } from '../providers/AuthProvider';
 
 export default function Login ({navigation}) {
 
-    const {login, error } = useContext(AuthContext);
+    const {login, error, setError } = useContext(AuthContext);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -45,7 +45,10 @@ export default function Login ({navigation}) {
 
             <TouchableOpacity 
               style={styles.signupButton}
-              onPress = {() => navigation.navigate('Register')}  
+              onPress = {() => {
+                navigation.navigate('Register');
+                setError(null)
+              }}  
             >
             <Text style={styles.loginText}>Register</Text>
             </TouchableOpacity>

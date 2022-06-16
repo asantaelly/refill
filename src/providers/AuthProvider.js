@@ -18,6 +18,7 @@ export const AuthProvider = ({children}) => {
                 user,
                 setUser,
                 error,
+                setError,
                 register: (name, email, password, passwordConfirmation) => {
                     if(!name || !email || !password || !passwordConfirmation){
                         setError('The input field must not be empty!')
