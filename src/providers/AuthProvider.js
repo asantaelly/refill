@@ -18,6 +18,37 @@ export const AuthProvider = ({children}) => {
                 user,
                 setUser,
                 error,
+                register: (name, email, password, passwordConfirmation) => {
+                    if(!name || !email || !password || !passwordConfirmation){
+                        setError('The input field must not be empty!')
+                        return
+                    }
+
+                    axios.post('/api/register', {
+                        name, email, password,
+                        password_confirmation: passwordConfirmation,
+                        device_name: 'mobile',
+                    })
+                    .then(response => {
+                        const userResource = {
+                            user: response.data.user,
+                            token: response.data.token
+                        }
+                        setUser(userResource);
+                        setError(null);
+                        SecureStore.setItemAsync('user', JSON.stringify(userResource))
+                    })
+                    .catch(error => {
+                        if(error.response) {
+                            const key = Object.keys(error.response.data.errors)[0];
+                            setError(error.response.data.errors[key][0]);
+                        } else if(error.request) {
+                            console.log('Request Error',error.request);
+                        }else {
+                            console.log('Error', error.message)
+                        }
+                    })
+                },
                 login: (email, password) => {
                     if(!email || !password) {
                         setError('The input field must not be empty!')
@@ -31,7 +62,7 @@ export const AuthProvider = ({children}) => {
                     })
                     .then(response => {
                         const userResponse = {
-                            email: response.data.user.email,
+                            user: response.data.user,
                             token: response.data.token,
                         }
                         setUser(userResponse);

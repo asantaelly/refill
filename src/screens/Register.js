@@ -1,10 +1,18 @@
+import { useContext, useState } from 'react';
 import {
     StyleSheet, Text, View, 
     TextInput, TouchableOpacity  
 }   from 'react-native';
+import { AuthContext } from '../providers/AuthProvider';
 
 
 export default function Register({navigation}) {
+
+    const {register, error} = useContext(AuthContext)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
     return (
       <View style={styles.container}>
@@ -13,43 +21,46 @@ export default function Register({navigation}) {
             <Text style={styles.welcomeText}>Welcome to our platform.</Text>
           </View>
 
-          
+          { error && <Text style={styles.errorMessage}>{error}</Text> }
 
           <View style={styles.middleContainer}>
 
           <TextInput 
               style={styles.input}
+              value={name}
+              onChangeText={text => setName(text)}
               placeholder="Name"
             />
 
             <TextInput 
               style={styles.input}
+              value={email}
+              onChangeText={text => setEmail(text)}
               placeholder="Email Address"
             />
       
             <TextInput 
               style={styles.input}
+              value={password}
+              onChangeText={text => setPassword(text)}
+              secureTextEntry
               placeholder="Password"
             />
 
             <TextInput 
               style={styles.input}
+              value={passwordConfirmation}
+              onChangeText={text => setPasswordConfirmation(text)}
+              secureTextEntry
               placeholder="Confirm Password"
             />
       
             <TouchableOpacity 
-              style={styles.loginButton}
-              // onPress = {() => navigation.navigate('Home')}  
-            >
-                <Text style={styles.loginText}>Register</Text>
-            </TouchableOpacity>
-
-            {/* <TouchableOpacity 
               style={styles.signupButton}
-              onPress = {() => navigation.navigate('Signup')}  
+              onPress = {() => register(name, email, password, passwordConfirmation)}  
             >
-            <Text style={styles.loginText}>Register</Text>
-            </TouchableOpacity> */}
+                <Text style={styles.signupText}>Register</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.bottomContainer}></View>
 
@@ -91,7 +102,7 @@ export default function Register({navigation}) {
       borderColor: '#C0C0C0',
       backgroundColor: '#e7ecef'
     },
-    loginButton: {
+    signupButton: {
       margin: 5,
       height: 50,
       backgroundColor: '#000',
@@ -99,17 +110,15 @@ export default function Register({navigation}) {
       alignItems: 'center',
       justifyContent: 'center'
     },
-    loginText: {
+    signupText: {
       fontSize: 16,
       fontWeight: 'bold',
       color: '#fff',
     },
-    signupButton: {
-      margin: 5,
-      height: 50,
-      backgroundColor: '#3a86ff',
-      borderRadius: 10,
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
+    errorMessage: {
+      paddingHorizontal: 8,
+      paddingBottom: 3,
+      color: 'red',
+      fontWeight: 'bold',
+    }
   }); 

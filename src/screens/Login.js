@@ -16,11 +16,7 @@ export default function Login ({navigation}) {
             <Text style={styles.welcomeText}>Welcome back.</Text>
           </View>
 
-          {/* <View> */}
-              {error &&
-                <Text style={styles.errorMessage}>{error}</Text>
-              }
-            {/* </View> */}
+              { error && <Text style={styles.errorMessage}>{error}</Text> }
 
           <View style={styles.middleContainer}>
             
