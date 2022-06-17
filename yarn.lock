@@ -3810,6 +3810,11 @@
     "default-gateway" "^4.2.0"
     "ipaddr.js" "^1.9.0"
 
+"intl@^1.2.5":
+  "integrity" "sha512-rK0KcPHeBFBcqsErKSpvZnrOmWOj+EmDkyJ57e90YWaQNqbcivcqmKDlHEeNprDWOsKzPsh1BfSpPQdDvclHVw=="
+  "resolved" "https://registry.npmjs.org/intl/-/intl-1.2.5.tgz"
+  "version" "1.2.5"
+
 "invariant@*", "invariant@^2.2.4":
   "integrity" "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA=="
   "resolved" "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"

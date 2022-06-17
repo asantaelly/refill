@@ -23,7 +23,7 @@ export default function Route() {
       setLoading(false);
     })
     .catch(error => {
-      console.log(err);
+      console.log(error);
     })
   }, [])
 
