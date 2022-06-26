@@ -3,8 +3,7 @@ import axios from 'axios';
 import {API_URL} from '@env'
 import * as SecureStore from 'expo-secure-store';
 
-// axios.defaults.baseURL = API_URL;
-axios.defaults.baseURL = 'https://6a1f-41-222-181-208.in.ngrok.io'
+axios.defaults.baseURL = API_URL;
 
 export const AuthContext = React.createContext({});
 
