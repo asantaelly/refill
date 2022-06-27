@@ -11,9 +11,10 @@ export default function DieselTab({navigation}) {
     const {user} = useContext(AuthContext)
     const [fuel, setFuel] = useState(null);
     const [loading, setLoading] = useState(true)
-    const fuelName = "diesel";
+    const [fuelType, setFuelType] = useState("diesel");
     const [amount, setAmount] = useState('');
     const [fuelAmount, setFuelAmount] = useState(0.00);
+    const [disabled, setDisabled] = useState(true)
 
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
@@ -26,10 +27,11 @@ export default function DieselTab({navigation}) {
         }
         const litres = amount/fuel.price;
         return litres
+
     }
 
     useEffect(() => {
-      axios.get(`/api/fuel/get/${fuelName}`)
+      axios.get(`/api/fuel/get/${fuelType}`)
         .then(response => {
           setFuel(response.data)
           setLoading(false)
@@ -38,8 +40,20 @@ export default function DieselTab({navigation}) {
           console.log(error.response);
         })
 
+        if(fuelAmount >= 1.00) {
+          setDisabled(false)
+        } else {
+          setDisabled(true)
+        }
+
         setFuelAmount(handleChange)
-    }, [fuel, amount])
+
+
+
+        return function cleanup() {
+          setFuelAmount(0.00);
+        }
+    }, [fuel, amount, fuelAmount])
 
     if(loading) {
       return (
@@ -80,12 +94,18 @@ export default function DieselTab({navigation}) {
 
             <View style={styles.litresWrapper}>
               <Text style={styles.litreText}>Amount in Litres</Text>
-              <Text style={styles.litreAmount}>{fuelAmount.toFixed(3)}</Text>
+              <Text style={styles.litreAmount}>{fuelAmount.toFixed(2)}</Text>
             </View>
 
             <TouchableOpacity
-              style={styles.submitButton}
-              onPress={() => navigation.navigate('Payment')}>
+              style={[styles.submitButton, disabled ? styles.submitStatus : '']}
+              onPress={() => navigation.navigate('Payment', {
+                data: {
+                  fuel, fuelAmount, amount, fuelType
+                }
+              })}
+              disabled={disabled}
+              >
                 <Text style={styles.textButton}>Pay Now</Text>
             </TouchableOpacity>
 
@@ -169,7 +189,7 @@ export default function DieselTab({navigation}) {
         padding: 10,
       },
       submitButton: {
-        backgroundColor: '#222',
+        backgroundColor: '#000',
         height: 50,
         marginTop: 30,
         alignItems: 'center',
@@ -181,6 +201,9 @@ export default function DieselTab({navigation}) {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold'
+      },
+      submitStatus: {
+        backgroundColor: '#777',
       },
       litresWrapper: {
         flexDirection: 'row',

@@ -11,9 +11,10 @@ export default function PetrolTab({navigation}) {
     const {user} = useContext(AuthContext)
     const [fuel, setFuel] = useState(null);
     const [loading, setLoading] = useState(true)
-    const fuelName = "petrol";
+    const [fuelType, setFuelType] = useState("petrol");
     const [amount, setAmount] = useState('');
     const [fuelAmount, setFuelAmount] = useState(0.00);
+    const [disabled, setDisabled] = useState(true)
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
 
@@ -29,7 +30,7 @@ export default function PetrolTab({navigation}) {
 
     useEffect(() => {
 
-      axios.get(`/api/fuel/get/${fuelName}`)
+      axios.get(`/api/fuel/get/${fuelType}`)
         .then(response => {
           setFuel(response.data)
           setLoading(false)
@@ -38,7 +39,18 @@ export default function PetrolTab({navigation}) {
           console.log(error.response);
         })
 
+        if(fuelAmount >= 1.00) {
+          setDisabled(false)
+        } else {
+          setDisabled(true)
+        }
+
         setFuelAmount(handleChange)
+
+
+        return function cleanup() {
+          setFuelAmount(0.00);
+        }
 
     }, [fuel, amount])
 
@@ -81,12 +93,18 @@ export default function PetrolTab({navigation}) {
 
             <View style={styles.litresWrapper}>
               <Text style={styles.litreText}>Amount in Litres</Text>
-              <Text style={styles.litreAmount}>{fuelAmount.toFixed(3)}</Text>
+              <Text style={styles.litreAmount}>{fuelAmount.toFixed(2)}</Text>
             </View>
 
             <TouchableOpacity
-              style={styles.submitButton}
-              onPress={() => navigation.navigate('Payment')}>
+              style={[styles.submitButton, disabled ? styles.submitStatus : '']}
+              onPress={() => navigation.navigate('Payment', {
+                data: {
+                  fuel, fuelAmount, amount, fuelType
+                }
+              })}
+              disabled={disabled}
+              >
                 <Text style={styles.textButton}>Pay Now</Text>
             </TouchableOpacity>
 
@@ -177,6 +195,9 @@ export default function PetrolTab({navigation}) {
         justifyContent: 'center',
         borderRadius: 10,
         padding: 10
+      },
+      submitStatus: {
+        backgroundColor: '#777',
       },
       textButton: {
         color: '#fff',
