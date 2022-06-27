@@ -7,21 +7,20 @@ import mpesa from '../../assets/logo/mpesa.png';
 import axios from 'axios';
 import { AuthContext } from '../providers/AuthProvider';
 
-export default function Payment({navigation}) {
+export default function Payment({route, navigation}) {
 
+  const {data} = route.params;
   const {user} = useContext(AuthContext)
-  const [amount, setAmount] = useState('10,000');
-  const [fuelAmount, setFuelAmount] = useState(3.340);
-  const [fuelName, setFuelName] = useState('Diesel');
   const [phoneNumber, setPhoneNumber] = useState("")
   const [disabled, setDisabled] = useState(true)
 
+  // User access token
   axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
 
     const confirmationAlert = () =>
     Alert.alert(
       "Confirm",
-      `Send ${amount} TZS to Smart Station for ${fuelAmount} Litres of ${fuelName}`,
+      `Send ${data.amount} TZS to Smart Station for ${data.fuelAmount.toFixed(2)} Litre(s) of ${data.fuelType}`,
       [
         {
           text: "Cancel",
@@ -30,7 +29,26 @@ export default function Payment({navigation}) {
         },
         { 
           text: "OK", 
-          onPress: handlePayment,
+          onPress: handlePayment(),
+        }
+      ],
+      {
+        cancelable: false
+      }
+    );
+
+    const successAlert = (response) =>
+    Alert.alert(
+      "Payment was successfully",
+      `Your payment of ${data.amount} TZS to Smart Station for ${data.fuelAmount.toFixed(2)} Litre(s) of ${data.fuelType} was successfully`,
+      [
+        { 
+          text: "OK", 
+          onPress: navigation.navigate('Receipt', {
+            data: data,
+            phoneNumber: phoneNumber,
+            paymentResponse: response,
+          }),
         }
       ],
       {
@@ -39,19 +57,16 @@ export default function Payment({navigation}) {
     );
 
     const handlePayment = () => {
-      const data = {
-        amount,
-        fuelAmount,
-        fuelName,
+      const paymetData = {
+        data,
         user,
         phoneNumber
       }
 
-      axios.post('api/payment', data)
+      axios.post('api/payment', paymetData)
       .then(response => {
-        console.log(response.data)
-        // setFuel(response.data)
-        // setLoading(false)
+        successAlert(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error.response);
@@ -123,12 +138,6 @@ export default function Payment({navigation}) {
         backgroundColor: '#fff',
         padding: 40,
       },
-    // upperContainer: {
-    //   flex: 1,
-    // },
-    // bottomContainer: {
-    //   flex: 3
-    // },
     title: {
         fontSize: 20,
         fontWeight: '500',
@@ -184,7 +193,6 @@ export default function Payment({navigation}) {
         height: 80
     },
     form: {
-      // flex:4,
       backgroundColor: '#fff',
       paddingHorizontal: 15,
     },

@@ -4,6 +4,7 @@ import { Button } from "react-native";
 import { AuthContext } from "../providers/AuthProvider";
 import { Home } from "../screens/Home";
 import Payment from "../screens/Payment";
+import Receipt from "../screens/Receipt";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ export const AppStack = () => {
         >
             <Stack.Screen name="Home" component={Home}/>
             <Stack.Screen name="Payment" component={Payment}/>
+            <Stack.Screen name="Receipt" component={Receipt}/>
         </Stack.Navigator>
     )
 
