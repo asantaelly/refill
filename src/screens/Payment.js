@@ -69,7 +69,7 @@ export default function Payment({route, navigation}) {
         console.log(response.data);
       })
       .catch(error => {
-        console.log(error.response);
+        console.log("Payment response error => ",error.response.data.message);
       })
 
       console.log('Submitting...')
