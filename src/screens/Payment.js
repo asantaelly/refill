@@ -65,14 +65,14 @@ export default function Payment({route, navigation}) {
         phoneNumber
       }
 
-      axios.post('api/pay', paymetData)
+      axios.post('/api/pay', paymetData)
       .then(response => {
         successAlert(response.data);
         console.log(response.data);
       })
       .catch(error => {
         if(error.response) {
-          console.log("Payment Error",error.response.data.message);
+          console.log("Payment Error ===>>> ",error.response);
         } else if(error.request) {
             console.log('Request Error',error.request);
         }else {
