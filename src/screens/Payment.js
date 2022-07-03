@@ -58,18 +58,26 @@ export default function Payment({route, navigation}) {
 
     const handlePayment = () => {
       const paymetData = {
-        data,
-        user,
+        fuel: data.fuel,
+        user: user.user,
+        amount: data.amount,
+        fuelAmount: data.fuelAmount,
         phoneNumber
       }
 
-      axios.post('api/payment', paymetData)
+      axios.post('api/pay', paymetData)
       .then(response => {
         successAlert(response.data);
         console.log(response.data);
       })
       .catch(error => {
-        console.log("Payment response error => ",error.response.data.message);
+        if(error.response) {
+          console.log("Payment Error",error.response.data.message);
+        } else if(error.request) {
+            console.log('Request Error',error.request);
+        }else {
+            console.log('Error', error.message)
+        }
       })
 
       console.log('Submitting...')

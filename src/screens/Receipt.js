@@ -10,7 +10,6 @@ export default function Receipt({route, navigation}) {
 
   axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
 
-  // console.log("Receipt =>",paymentResponse);
 
     return (
       <View style={styles.container}>
@@ -23,6 +22,9 @@ export default function Receipt({route, navigation}) {
             <Text style={styles.dataText}>Fuel Amount:           {paymentResponse.transaction['litres']} Litre(s)</Text>
             <Text style={styles.dataText}>Cash Paid:                TZS  {paymentResponse.transaction['cash_paid']}/=</Text>
             <Text style={styles.dataText}>Access Token:          { paymentResponse.transaction['access_token']}</Text>
+            <Text style={styles.dataText}>Status:                       { paymentResponse.transaction['status'] ? <Text style={styles.statusActive}>Active</Text> : <Text style={styles.statusInactive}>Active</Text>}</Text>
+
+
         </View>
         
       </View> 
@@ -48,5 +50,17 @@ export default function Receipt({route, navigation}) {
         fontSize: 20, 
         fontWeight: '500',
         paddingTop: 5
+    },
+    statusActive: {
+      backgroundColor: '#0ead69',
+      color: '#000',
+      borderRadius: 10,
+      padding: 20
+    },
+    statusInactive: {
+      backgroundColor: '#ada8b6',
+      color: '#000',
+      borderRadius: 10,
+      padding: 20
     }
   })
