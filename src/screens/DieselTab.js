@@ -90,6 +90,8 @@ export default function DieselTab({navigation}) {
               value={amount}
               onChangeText={number => setAmount(number)}
               keyboardType={'number-pad'}
+              editable={fuel.status == 0 ? false : true}
+              selectTextOnFocus={fuel.status == 0 ? false : true}
             />
 
             <View style={styles.litresWrapper}>
@@ -106,7 +108,7 @@ export default function DieselTab({navigation}) {
               })}
               disabled={disabled}
               >
-                <Text style={styles.textButton}>Pay Now</Text>
+                <Text style={styles.textButton}>Pay</Text>
             </TouchableOpacity>
 
           </View>

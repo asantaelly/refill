@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "pfs",
-    "slug": "pfs",
-    "version": "1.0.3",
+    "name": "Smart Station",
+    "slug": "Smart Station",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.asantaelly.pfs"
+      "package": "com.asantaelly.smartstation"
     },
     "web": {
       "favicon": "./assets/favicon.png"
