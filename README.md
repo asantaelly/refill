@@ -57,10 +57,6 @@ Install Expo Go app for ios or Adroid.
  ```
  npm start
  ```
- 
-## Authors
-
-* **Wilbroad Assey**
 
 ## License
 
