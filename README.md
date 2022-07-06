@@ -36,7 +36,7 @@ npm install
 
 Install ngrok so you can host your local service ie [Web app](https://github.com/asantaelly/smart_station_web_app)
 
-  - After installing ngrok start your web app local and run the folling command
+  - After installing ngrok start your web app local and run the following command
   
   ```
    ngrok http http://127.0.0.1:8000
