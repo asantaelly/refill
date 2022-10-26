@@ -1,29 +1,31 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppStack } from './navigation/AppStack';
 import AuthStack from './navigation/AuthStack';
-import { AuthContext } from './providers/AuthProvider';
 import * as SecureStore from 'expo-secure-store';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserPayload } from '../store/slices/user/userSlice';
 
 
 
 export default function Route() {
-  const {user, setUser, login, logout } = useContext(AuthContext);
+
+  const { token } = useSelector((state) => state.user);
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if the user is logged in or not
     SecureStore.getItemAsync('user')
     .then(userString => {
       if(userString) {
         userObject = JSON.parse(userString)
-        setUser(userObject)
+        dispatch(setUserPayload(userObject))
       }
       setLoading(false);
     })
     .catch(error => {
-      console.log(error);
+      console.log("User not found", error);
     })
   }, [])
 
@@ -37,7 +39,7 @@ export default function Route() {
 
   return (
     <NavigationContainer>
-      {user ? <AppStack/> : <AuthStack/>}
+      {token ? <AppStack/> : <AuthStack/>}
     </NavigationContainer>
    
   );

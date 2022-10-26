@@ -1,13 +1,35 @@
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../store/slices/user/userActions';
+import { ErrorView } from '../components/ErrorView';
 import { AuthContext } from '../providers/AuthProvider';
+import { loginValidation } from '../utils/validation';
 
 
 export default function Login ({navigation}) {
 
-    const {login, error, setError } = useContext(AuthContext);
+    const dispatch = useDispatch();
+
+    // const {login, error, setError } = useContext(AuthContext);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loginErrors, setLoginErrors] = useState(null);
+
+
+    function handleSubmit() {
+        try {
+
+          // Validate Login Data
+          const validated = loginValidation(email, password);
+
+          // Login user
+          dispatch(loginUser(validated))
+
+        } catch (err) {
+          setLoginErrors(err)
+        }
+    }
 
     return (
       <View style={styles.container}>
@@ -16,7 +38,7 @@ export default function Login ({navigation}) {
             <Text style={styles.welcomeText}>Welcome back.</Text>
           </View>
 
-              { error && <Text style={styles.errorMessage}>{error}</Text> }
+              { loginErrors && <ErrorView error={loginErrors} />}
 
           <View style={styles.middleContainer}>
             
@@ -38,7 +60,7 @@ export default function Login ({navigation}) {
       
             <TouchableOpacity 
               style={styles.loginButton}
-              onPress = {() => login(email, password)}
+              onPress = {handleSubmit}
             >
             <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
@@ -47,7 +69,6 @@ export default function Login ({navigation}) {
               style={styles.signupButton}
               onPress = {() => {
                 navigation.navigate('Register');
-                setError(null)
               }}  
             >
             <Text style={styles.loginText}>Register</Text>

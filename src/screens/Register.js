@@ -1,18 +1,42 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import {
     StyleSheet, Text, View, 
     TextInput, TouchableOpacity  
 }   from 'react-native';
 import { AuthContext } from '../providers/AuthProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { userErrors } from '../../store/slices/user/userSlice';
+import { registerUser } from '../../store/slices/user/userActions';
+import { registrationValidation } from '../utils/validation';
+import { ErrorView } from '../components/ErrorView';
 
 
 export default function Register({navigation}) {
 
-    const {register, error} = useContext(AuthContext)
+    const { error } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
+    // const {register, error} = useContext(AuthContext)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirmation, setPasswordConfirmation] = useState('')
+
+
+    // Function to handle Submission
+    function handleSubmit () {
+
+      try{
+        // Validate submitted data
+        const validated = registrationValidation(name, email, password, passwordConfirmation)
+
+        // Dispatch data to redux store
+        dispatch(registerUser(validated))
+
+      } catch (err) {
+        dispatch(userErrors(err))
+      }
+    }
 
     return (
       <View style={styles.container}>
@@ -21,11 +45,12 @@ export default function Register({navigation}) {
             <Text style={styles.welcomeText}>Welcome to our platform.</Text>
           </View>
 
-          { error && <Text style={styles.errorMessage}>{error}</Text> }
+          { error && <ErrorView error={error}/> }
 
           <View style={styles.middleContainer}>
 
           <TextInput 
+              // ref={nameRef}
               style={styles.input}
               value={name}
               onChangeText={text => setName(text)}
@@ -57,7 +82,7 @@ export default function Register({navigation}) {
       
             <TouchableOpacity 
               style={styles.signupButton}
-              onPress = {() => register(name, email, password, passwordConfirmation)}  
+              onPress = {handleSubmit}  
             >
                 <Text style={styles.signupText}>Register</Text>
             </TouchableOpacity>
@@ -120,5 +145,6 @@ export default function Register({navigation}) {
       paddingBottom: 3,
       color: 'red',
       fontWeight: 'bold',
+      backgroundColor: ''
     }
   }); 

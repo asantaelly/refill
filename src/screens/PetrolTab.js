@@ -1,14 +1,15 @@
-import { React, useContext, useEffect, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator} from 'react-native';
-import { AuthContext } from '../providers/AuthProvider';
 import axios from "axios";
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import { useSelector } from 'react-redux';
 
 
 export default function PetrolTab({navigation}) {
 
-    const {user} = useContext(AuthContext)
+    const { token } = useSelector((state) => state.user)
+
     const [fuel, setFuel] = useState(null);
     const [loading, setLoading] = useState(true)
     const [fuelType, setFuelType] = useState("petrol");
@@ -16,7 +17,7 @@ export default function PetrolTab({navigation}) {
     const [fuelAmount, setFuelAmount] = useState(0.00);
     const [disabled, setDisabled] = useState(true)
 
-    axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
      // perform calculation for fuel purchase
      const handleChange = () => {

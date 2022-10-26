@@ -6,16 +6,19 @@ import tigo from '../../assets/logo/tigopesa.png';
 import mpesa from '../../assets/logo/mpesa.png';
 import axios from 'axios';
 import { AuthContext } from '../providers/AuthProvider';
+import { useSelector } from 'react-redux';
 
 export default function Payment({route, navigation}) {
 
+  const { user, token} = useSelector((state) => state.user)
+
   const {data} = route.params;
-  const {user} = useContext(AuthContext)
+  // const {user} = useContext(AuthContext)
   const [phoneNumber, setPhoneNumber] = useState("")
   const [disabled, setDisabled] = useState(true)
 
   // User access token
-  axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const confirmationAlert = () =>
     Alert.alert(
