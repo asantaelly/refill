@@ -5,7 +5,7 @@ import airtel from '../../assets/logo/airtelmoney.png';
 import tigo from '../../assets/logo/tigopesa.png';
 import mpesa from '../../assets/logo/mpesa.png';
 import axios from 'axios';
-import { AuthContext } from '../providers/AuthProvider';
+// import { AuthContext } from '../providers/AuthProvider';
 import { useSelector } from 'react-redux';
 
 export default function Payment({route, navigation}) {
@@ -18,7 +18,7 @@ export default function Payment({route, navigation}) {
   const [disabled, setDisabled] = useState(true)
 
   // User access token
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const confirmationAlert = () =>
     Alert.alert(

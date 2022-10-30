@@ -3,7 +3,7 @@ import {
     StyleSheet, Text, View, 
     TextInput, TouchableOpacity  
 }   from 'react-native';
-import { AuthContext } from '../providers/AuthProvider';
+// import { AuthContext } from '../providers/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { userErrors } from '../../store/slices/user/userSlice';
 import { registerUser } from '../../store/slices/user/userActions';

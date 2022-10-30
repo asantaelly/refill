@@ -1,14 +1,14 @@
 import { React, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Alert, Image, TextInput } from 'react-native';
 import axios from 'axios';
-import { AuthContext } from '../providers/AuthProvider';
+// import { AuthContext } from '../providers/AuthProvider';
 
 export default function Receipt({route, navigation}) {
 
   const {data, phoneNumber, paymentResponse} = route.params;
-  const {user} = useContext(AuthContext)
+  // const {user} = useContext(AuthContext)
 
-  axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
 
 
     return (
