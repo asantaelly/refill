@@ -3,60 +3,64 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingVi
 import axios from "axios";
 import 'intl';
 import 'intl/locale-data/jsonp/en';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFuel } from '../../store/slices/fuel/fuelActions';
+import { ErrorView } from '../components/ErrorView';
 
 
-export default function DieselTab({navigation}) {
+export default function FuelDashboard({navigation, fuelType}) {
 
+  // const fuelType = fuelName;
+
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.user)
+  const { loading, fuelPayload, error } = useSelector((state) => state.fuel)
 
+  // const [fuelType, setFuelType] = useState("petrol");
+  const [amount, setAmount] = useState(0);
+  const [fuelAmount, setFuelAmount] = useState(0.00);
+  const [amountError, setAmountError] = useState()
 
-    const [fuel, setFuel] = useState(null);
-    const [loading, setLoading] = useState(true)
-    const [fuelType, setFuelType] = useState("diesel");
-    const [amount, setAmount] = useState('');
-    const [fuelAmount, setFuelAmount] = useState(0.00);
-    const [disabled, setDisabled] = useState(true)
+  // perform calculation for fuel purchase
+  const handleCalculation = () => {
 
-
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-    // perform calculation for fuel purchase
-    const handleChange = () => {
-
-        if(!fuel) {
-            return
-        }
-        const litres = amount/fuel.price;
-        return litres
-
+    if(!fuelPayload){
+      return
     }
 
-    useEffect(() => {
-      axios.get(`/api/fuel/get/${fuelType}`)
-        .then(response => {
-          setFuel(response.data)
-          setLoading(false)
-        })
-        .catch(error => {
-          console.log(error.response);
-        })
+    const litres = amount/Number(fuelPayload.price);
+    return litres;
+  }
 
-        if(fuelAmount >= 1.00) {
-          setDisabled(false)
-        } else {
-          setDisabled(true)
-        }
+  // Submit amount
+  const handleSubmit = () => {
 
-        setFuelAmount(handleChange)
+    if(fuelAmount < 1.00) {
+      setAmountError("Fuel should be more than one litre!")
+      return
+    }
 
+    navigation.navigate('Payment', {
+      data: {
+        fuelPayload, fuelAmount, amount, fuelType
+      }
+    })
+  }
 
+  useEffect(() => {
 
-        return function cleanup() {
-          setFuelAmount(0.00);
-        }
-    }, [fuel, amount, fuelAmount])
+    dispatch(getFuel(fuelType))
 
+    // Calculate everytime user type ammount
+    setFuelAmount(handleCalculation)
+
+    return function cleanup() {
+      setFuelAmount(0.00)
+    }
+
+  }, [fuelAmount, amount])
+
+  if(!fuelPayload){
     if(loading) {
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -64,6 +68,9 @@ export default function DieselTab({navigation}) {
         </View>
       )
     }
+  }
+
+    
 
     return (
       <KeyboardAvoidingView style={styles.container}>
@@ -73,13 +80,10 @@ export default function DieselTab({navigation}) {
             <View style={styles.info}>
               <View style={styles.currentPrice}>
                 <Text style={styles.title}>Price per Litre.</Text>
-                <Text style={styles.price}>{ new Intl.NumberFormat().format(fuel.price)} TZS</Text>
+                <Text style={styles.price}>{ new Intl.NumberFormat().format(fuelPayload.price)} TZS</Text>
               </View>
               <View style={styles.status}>
-                { fuel.status ? 
-                    <Text style={styles.statusButton}>available</Text> : 
-                    <Text style={styles.statusInactiveButton}>Unavailable</Text>
-                }
+                { fuelPayload.status ? <Text style={styles.statusButton}>available</Text>: <Text style={styles.statusInactiveButton}>Unavailable</Text>}
               </View>
             </View>
         </View>
@@ -95,9 +99,11 @@ export default function DieselTab({navigation}) {
               value={amount}
               onChangeText={number => setAmount(number)}
               keyboardType={'number-pad'}
-              editable={fuel.status == 0 ? false : true}
-              selectTextOnFocus={fuel.status == 0 ? false : true}
+              editable={fuelPayload.status == 0 ? false : true}
+              selectTextOnFocus={fuelPayload.status == 0 ? false : true}
             />
+
+            {amountError && <ErrorView error={amountError}/>}
 
             <View style={styles.litresWrapper}>
               <Text style={styles.litreText}>Amount in Litres</Text>
@@ -105,13 +111,8 @@ export default function DieselTab({navigation}) {
             </View>
 
             <TouchableOpacity
-              style={[styles.submitButton, disabled ? styles.submitStatus : '']}
-              onPress={() => navigation.navigate('Payment', {
-                data: {
-                  fuel, fuelAmount, amount, fuelType
-                }
-              })}
-              disabled={disabled}
+              style={[styles.submitButton]}
+              onPress={handleSubmit}
               >
                 <Text style={styles.textButton}>Pay</Text>
             </TouchableOpacity>
@@ -189,32 +190,33 @@ export default function DieselTab({navigation}) {
         backgroundColor: '#e7ecef',
         height: 50,
         borderRadius: 10,
-        padding: 10,
+        padding: 15,
+        margin: 5
       },
       titleAmount: {
         fontSize: 16,
         padding: 10,
       },
       submitButton: {
-        backgroundColor: '#000',
+        backgroundColor: '#222',
         height: 50,
-        marginTop: 30,
+        marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
         padding: 10
+      },
+      submitStatus: {
+        backgroundColor: '#777',
       },
       textButton: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold'
       },
-      submitStatus: {
-        backgroundColor: '#777',
-      },
       litresWrapper: {
         flexDirection: 'row',
-        paddingVertical: 20
+        paddingVertical: 5
       },
       litreText: {
         margin: 10,
@@ -224,5 +226,10 @@ export default function DieselTab({navigation}) {
         fontSize: 24,
         paddingHorizontal: 10,
         margin: 10
+      },
+      errorStyles: {
+        padding: 20,
+        backgroundColor: 'red',
+        marginTop: 15
       }
   })

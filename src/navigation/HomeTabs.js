@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import DieselTab from '../screens/DieselTab';
-import PetrolTab from '../screens/PetrolTab';
+import DieselTab from '../screens/Dashboard/DieselTab';
+import PetrolTab from '../screens/Dashboard/PetrolTab';
 
 const Tab = createMaterialTopTabNavigator();
 

@@ -17,7 +17,7 @@ export default function AuthStack() {
                 <Stack.Screen 
                     name="Login"
                     component={Login}
-                    options={{ 
+                    options={{
                         title: 'PFS',
                         headerShown: false
                     }}

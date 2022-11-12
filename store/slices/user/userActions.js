@@ -2,10 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const baseURL = 'https://ee47-41-222-181-78.in.ngrok.io'
+const baseURL = 'https://2718-154-74-127-178.eu.ngrok.io'
 
 axios.defaults.baseURL = baseURL;
-
 
 export const registerUser = createAsyncThunk(
     'user/register',
@@ -52,11 +51,12 @@ export const loginUser = createAsyncThunk(
         } catch (error) {
             
             if(error.response && error.response.data.message) {
-                console.log('Error response', error.response.data)
+                console.log('Error response: ', error.response.data.message)
                 return rejectWithValue(error.response.data.message)
-            } else {
-                console.log('Error message: ', error.message)
-                return rejectWithValue(error.message)
+            } 
+            else {
+                console.log('Error message: ', error.response.data.message)
+                return rejectWithValue(error.response.data.message)
             }
         }
     }
@@ -80,9 +80,10 @@ export const logoutUser = createAsyncThunk(
         } catch (error) {
             
             if(error.response && error.response.data.message) {
-                console.log('Error response', error.response.data)
+                console.log('Error response: ', error.response.data)
                 return rejectWithValue(error.response.data.message)
-            } else {
+            }
+            else {
                 console.log('Error message: ', error.message)
                 return rejectWithValue(error.message)
             }

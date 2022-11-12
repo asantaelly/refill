@@ -1,7 +1,8 @@
 import { React, useContext, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/slices/user/userActions';
+import { userErrors } from '../../store/slices/user/userSlice';
 import { ErrorView } from '../components/ErrorView';
 // import { AuthContext } from '../providers/AuthProvider';
 import { loginValidation } from '../utils/validation';
@@ -10,6 +11,7 @@ import { loginValidation } from '../utils/validation';
 export default function Login ({navigation}) {
 
     const dispatch = useDispatch();
+    const { error } = useSelector((state) => state.user)
 
     // const {login, error, setError } = useContext(AuthContext);
     const [email, setEmail] = useState('')
@@ -27,7 +29,8 @@ export default function Login ({navigation}) {
           dispatch(loginUser(validated))
 
         } catch (err) {
-          setLoginErrors(err)
+          dispatch(userErrors(err))
+          // setLoginErrors(err)
         }
     }
 
@@ -38,7 +41,7 @@ export default function Login ({navigation}) {
             <Text style={styles.welcomeText}>Welcome back.</Text>
           </View>
 
-              { loginErrors && <ErrorView error={loginErrors} />}
+              { error && <ErrorView error={error} />}
 
           <View style={styles.middleContainer}>
             
@@ -69,6 +72,7 @@ export default function Login ({navigation}) {
               style={styles.signupButton}
               onPress = {() => {
                 navigation.navigate('Register');
+                dispatch(userErrors(null))
               }}  
             >
             <Text style={styles.loginText}>Register</Text>

@@ -29,7 +29,7 @@ const userSlice = createSlice({
         [registerUser.fulfilled]: (state, action) => {
             state.error = null
             state.loading = false
-            state.user = action.payload.user
+            state.userPayload = action.payload.user
             state.token = action.payload.token
         },
         [registerUser.rejected]: (state, action) => {
@@ -44,14 +44,14 @@ const userSlice = createSlice({
         [loginUser.fulfilled]: (state, action) => {
             state.error = null
             state.loading = false
-            state.user = action.payload.user
+            state.userPayload = action.payload.user
             state.token = action.payload.token
         },
         [loginUser.rejected]: (state, action) => {
             state.loading = false
             state.error = action.payload
         },
-        // Logout
+        // Logout User
         [logoutUser.fulfilled]: (state, action) => {
             state.token = null
             state.userPayload = {},

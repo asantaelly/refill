@@ -13,7 +13,7 @@ export default function Route() {
 
   const { token } = useSelector((state) => state.user);
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     SecureStore.getItemAsync('user')
@@ -22,6 +22,7 @@ export default function Route() {
         userObject = JSON.parse(userString)
         dispatch(setUserPayload(userObject))
       }
+      // console.log('User', userString);
       setLoading(false);
     })
     .catch(error => {

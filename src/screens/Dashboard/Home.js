@@ -1,4 +1,4 @@
-import HomeTabs from "../navigation/HomeTabs"
+import HomeTabs from "../../navigation/HomeTabs"
 
 export const Home = () => {
     return (
