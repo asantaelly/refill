@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const baseURL = 'https://2718-154-74-127-178.eu.ngrok.io'
+const baseURL = 'https://dd2a-41-222-181-60.eu.ngrok.io'
 
 axios.defaults.baseURL = baseURL;
 
